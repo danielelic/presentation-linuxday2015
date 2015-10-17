@@ -1,0 +1,503 @@
+\documentclass{beamer}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{url} 
+\usepackage{comment}
+\usepackage{booktabs}
+
+
+\usepackage{graphicx}
+\title{Qt: Introduzione al framework}
+\subtitle{}
+\author{Daniele Liciotti}
+\institute{ICT Engineer and PhD Student}
+% logo of my university
+\titlegraphic{\includegraphics[width=2.5cm]{images/fermolug-logo.png}
+	\hspace{3cm}
+	\includegraphics[width=2.1cm]{images/linuxday-logo.png}
+}
+\date{Fermo, 24 Ottobre, 2015}
+\subject{LinuxDay2015}
+
+\usetheme{Madrid}
+\useoutertheme{infolines}
+
+\defbeamertemplate*{footline}{infolines}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+\begin{document}
+\maketitle
+\begin{frame}
+	\begin{block}{\textbf{Daniele Liciotti}}
+		\begin{columns}
+			\column{0.6\textwidth}
+			\vspace{1cm}\\
+			\emph{Ph.D. Student}\\
+			Università Politecnica delle Marche\\
+			Dipartimento di Ingegneria dell'Informazione\\
+			
+			\vspace{1cm}
+			e-mail:\qquad \emph{danielelic@gmail.com}
+			\column{0.3\textwidth}
+			\begin{figure}
+				\centering
+				\includegraphics[height=3cm]{images/me.png}
+			\end{figure}
+	\end{columns}
+	\end{block}
+\end{frame}
+\begin{frame}
+	\frametitle{Perché Qt?}
+	\begin{itemize}
+		\item Multipiattaforma
+		\item Free Software
+		\item Ricchezza
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[height=2.5cm]{images/multiplat.png}
+		\qquad
+		\includegraphics[height=2.5cm]{images/free.png}
+		\qquad
+		\includegraphics[height=2.5cm]{images/money.jpg}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Multipiattaforma}
+	\begin{itemize}
+		\item \textbf{Android} - Qt for Android, formerly known as Necessitas.Embedded Linux - Qt for embedded platforms: personal digital assistant, smartphone,
+		etc.
+		\item \textbf{iOS} - Qt for iOS platforms (iPhone, iPad)
+		\item \textbf{OS X} - Qt for Apple OS X; supports applications on Cocoa
+		\item \textbf{QNX / BlackBerry 10} - Qt for QNX[24] and the QNX-based BlackBerry 10 platform.
+		\item \textbf{Sailfish OS} - Qt for Sailfish OS.
+		\item \textbf{VxWorks} - Qt for VxWorks.
+		\item \textbf{Wayland} - Qt for Wayland.
+		\item \textbf{Windows} - Qt for Microsoft Windows XP, Vista, 7, 8, 10
+		\item \textbf{Windows CE} - Qt for Windows CE 6 and Windows Embedded Compact 7.
+		\item \textbf{X11} - Qt for X Window System (GNU/Linux, FreeBSD, HP-UX, Solaris, AIX, etc.)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Non ti piace C++?}
+	\begin{block}{}
+		Esistono binding per moltissimi altri linguaggi:
+		\begin{itemize}
+			\item Java
+			\item C\#
+			\item Ruby
+			\item PHP
+			\item Perl
+			\item \dots
+		\end{itemize}
+	\end{block}
+	\vspace{0.5cm}
+	\begin{figure}
+		\includegraphics[height=1.6cm]{images/cplusplus.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/python.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/java.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/php.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/ruby.png}
+	\end{figure}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Free Software}
+	Qt is available under different licensing options designed to accommodate the needs of our various users.
+	\begin{itemize}
+		\item Enterprise, Professional, and Indie Mobile licenses
+		\item Community license (GPL or LGPL versions 3 and 2.1)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ricchezza}
+	Non solo GUI:
+	\begin{itemize}
+		\item QtGui è solo uno dei moduli del framework Qt
+		\item Con Qt, C++ raggiunge un livello superiore:
+		\begin{itemize}
+			\item Semplicità e usabilità
+			\item Uniformità sulle varie piattaforme
+			\item E poi metacall, segnali, slot...
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{I moduli}
+	\begin{table}[]
+		\centering
+		\scriptsize
+		\begin{tabular}{lp{8cm}}
+			\toprule
+			Module                        & Description                                                                                    \\
+			\midrule
+			Qt Core                       & Core non-graphical classes used by other modules.                                              \\
+			Qt GUI                        & Base classes for graphical user interface (GUI) components. Includes OpenGL.                   \\
+			Qt Multimedia                 & Classes for audio, video, radio and camera functionality.                                      \\
+			Qt Multimedia Widgets         & Widget-based classes for implementing multimedia functionality.                                \\
+			Qt Network                    & Classes to make network programming easier and more portable.                                  \\
+			Qt QML                        & Classes for QML and JavaScript languages.                                                      \\
+			Qt Quick                      & A declarative framework for building highly dynamic applications with custom user interfaces.  \\
+			Qt Quick Controls             & Reusable Qt Quick based UI controls to create classic desktop-style user interfaces.           \\
+			Qt Quick Dialogs              & Types for creating and interacting with system dialogs from a Qt Quick application.            \\
+			Qt Quick Layouts              & Layouts are items that are used to arrange Qt Quick 2 based items in the user interface.       \\
+			Qt SQL                        & Classes for database integration using SQL.                                                    \\
+			Qt Test                       & Classes for unit testing Qt applications and libraries.                                        \\
+			Qt WebKit        & Classes for a WebKit2 based implementation and a QML API. \\
+			Qt WebKit Widgets & WebKit1 and QWidget-based classes from Qt 4.                                                   \\
+			Qt Widgets                    & Classes to extend Qt GUI with C++ widgets.     \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Install Time!}
+	Tutto il necessario per sviluppare con Qt:\\
+	\begin{center}
+		\includegraphics[height=3cm]{images/qt.png}\\
+		\url{http://www.qt.io/}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Qt Creator}
+	Qt Creator è la scelta ideale per sviluppare con Qt:
+	\begin{itemize}
+		\item Qt Designer
+		\item Refactoring
+		\item Debugger ottimizzato per Qt
+		\item Supporto Git, CVS, Mercurial, SVN
+	\end{itemize}
+	\vspace{0.5cm}
+	\begin{figure}
+		\includegraphics[height=1.6cm]{images/git.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/hg.png}
+		\qquad
+		\includegraphics[height=1.6cm]{images/svn.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Una breve panoramica}
+	\begin{block}{}
+		\begin{itemize}
+			\item Strutture dati
+			\begin{itemize}
+				\item Tipi di dato semplici
+				\item Contenitori
+			\end{itemize}
+			\item QObject e f.lli
+			\begin{itemize}
+				\item L'albero degli oggetti
+				\item Segnali e slot
+				\item Introspezione
+				\item Una prima applicazione grafica
+			\end{itemize}
+			\item Threading
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Tipi di dato interi}
+	Qt offre tipi di dato interi di lunghezza fissata, ad esempio:
+	\begin{itemize}
+		\item qint8\footnote{http://qt-project.org/doc/qt-5/qtglobal.html\#qint8-typedef}
+		\item qint16
+		\item qint32
+		\item qint64
+	\end{itemize}
+	Nessun problema di portabilità tra piattaforme diverse
+	\begin{block}{}
+		\centering
+		{\ttfamily sizeof(qint8) == 1}
+	\end{block}
+\end{frame}
+
+\begin{frame}{QChar e QString}
+	\begin{itemize}
+		\item QChar è un carattere Unicode a 16 bit\footnote{UCS-2 per essere precisi}
+		\item QString è un array di QChar
+		\item Una maniera unificata di maneggiare stringhe non-ASCII
+		problemi di portabilità tra piattaforme diverse
+		\item Le QString sono modificabili ma copy-on-write
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{Modificare QString}
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily \textcolor{red}{QString} stringa = "Salve a tutti!!!";\\
+				\bigskip
+				//Salve a tutti!\\
+				stringa.\textcolor{red}{chop(2)};\\
+				\bigskip
+				//Salve a tutti! Come\\\
+				Stringa \textcolor{red}{+=} " Come";\\
+				\bigskip
+				//Salve a tutti! Come va?\\
+				stringa.\textcolor{red}{append(" va?")};}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Modificare QString}
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily //Salve a tutti voi! Come va?\\
+				stringa.\textcolor{red}{insert(13, " voi")};\\
+				\bigskip
+				//Salve a tutti! Come va?\\
+				stringa.\textcolor{red}{remove(14, 4)};\\
+				\bigskip
+				//Ciao a tutti! Come va?\\
+				stringa.\textcolor{red}{replace("Salve", "Ciao")};}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Parti di QString}
+	\begin{columns}
+		\column{0.9\textwidth}
+		\begin{block}{}
+			{\ttfamily //Ciao a tutti! Come va?\\
+				\bigskip
+				//ao\\
+				stringa.\textcolor{red}{mid(2, 2)};\\
+				\bigskip
+				//Ciao\\
+				stringa.\textcolor{red}{left(4)};\\
+				\bigskip
+				//va?\\
+				stringa.\textcolor{red}{right(3)};\\
+				\bigskip
+				//Ciao a tutti! Come va? Ciao a tutti! Come va?\\
+				stringa.\textcolor{red}{repeated(2)};}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Altri metodi di QString}
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily //Salve a tutti voi! Come va?\\
+				\bigskip
+				stringa.\textcolor{red}{indexOf("a")}; //2\\
+				\bigskip
+				stringa.\textcolor{red}{at(1)}; //i\\
+				\bigskip
+				stringa\textcolor{red}{[1]}; //i\\
+				\bigskip
+				stringa.\textcolor{red}{count("a")}; //3}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Altri metodi di QString}
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily //Salve a tutti voi! Come va?\\
+				\bigskip
+				stringa.\textcolor{red}{length()}; //22\\
+				\bigskip
+				stringa.\textcolor{red}{contains("utti")}; //true\\
+				\bigskip
+				stringa.\textcolor{red}{endsWith("?")}; //true\\
+				\bigskip
+				stringa.\textcolor{red}{startsWith("Salve")}; //false}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Altri metodi di QString}
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily //Salve a tutti voi! Come va?\\
+				\bigskip
+				stringa.\textcolor{red}{length()}; //22\\
+				\bigskip
+				stringa.\textcolor{red}{contains("utti")}; //true\\
+				\bigskip
+				stringa.\textcolor{red}{endsWith("?")}; //true\\
+				\bigskip
+				stringa.\textcolor{red}{startsWith("Salve")}; //false}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Altri metodi di QString}
+	\begin{columns}
+		\column{0.8\textwidth}
+		\begin{block}{Conversione da numero a stringa}
+			{\ttfamily QString::\textcolor{red}{number(123)};  //123}
+		\end{block}
+		\bigskip
+
+		\begin{block}{Il metodo QString::arg()}
+			{\ttfamily QString("Siamo \textcolor{red}{\%1} amici, e ci piacciono i \textcolor{red}{\%2}.")\\
+				.\textcolor{red}{arg(3)}\\
+				.\textcolor{red}{arg("gattini")};\\
+				//Siamo 3 amici e ci piacciono i gattini.}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{QString e char*}
+	QString supportano caratteri non-ASCII, e per convertire nel classico array di char:
+	\begin{columns}
+		\column{0.75\textwidth}
+		\begin{block}{}
+			{\ttfamily QString miaStringa = "testo";\\
+				char *miaStringaClassica = miaStringa.\textcolor{red}{toLocal8Bit().data()};\\
+				std::cout << miaStringaClassica << std::endl;}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{I contenitori}
+	Qt offre una nutrita serie di contenitori che permettono di soddisfare le esigenze più comuni.
+	\bigskip
+	\begin{columns}
+		\column{0.8\textwidth}
+		\begin{block}{}
+			{\ttfamily QList<T>}: array di puntatori, accesso via indice rapido\\
+			{\ttfamily QLinkedList<T>}: lista concatenata, inserimenti rapidi\\
+			{\ttfamily QVector<T>}: array vero e proprio, inserimenti lenti\\
+			{\ttfamily QStack<T>}: pila LIFO, basato su {\ttfamily QVector<T>}\\
+			{\ttfamily QQueue<T>}: coda FIFO, basato su {\ttfamily QList<T>}\\
+			{\ttfamily QSet<T>}: senza ordinato né duplicati, basato su {\ttfamily QHash}
+		\end{block}
+	\end{columns}
+	\bigskip
+\end{frame}
+
+\begin{frame}{I contenitori (esempio)}
+	Hanno interfacce abbastanza simili
+	\bigskip
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{block}{}
+			{\ttfamily QList<QString> lista;\\
+				lista.append("primo");\\
+				lista += "secondo";\\
+				lista.push\_back("terzo");\\
+				lista.removeLast();}
+		\end{block}
+	\end{columns}
+	\bigskip
+\end{frame}
+
+\begin{frame}{Contenitori chiave-valore}
+	Qt offre una nutrita serie di contenitori che permettono di soddisfare le esigenze più comuni.
+	\bigskip
+	\begin{columns}
+		\column{0.8\textwidth}
+		\begin{block}{}
+			{\ttfamily QMap<Key,T>}: array associativo ordinato per chiave\\
+			{\ttfamily QMultiMap<Key,T>}: più di un valore per chiave\\
+			{\ttfamily QHash<Key,T>}: non ordinato, lookup rapidi\\
+			{\ttfamily QMultiHash<Key,T>}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{I contenitori chiave-valore (esempio)}
+Hanno interfacce abbastanza simili
+\bigskip
+\begin{columns}
+	\column{0.75\textwidth}
+	\begin{block}{}
+		{\ttfamily QHash<QString, int> punteggio;\\
+			punteggio.insert("Andrea", 1);\\
+			punteggio.insert("Paolo", 3);\\
+			punteggio.insert("Franco", 0);\\
+			std::cout << punteggio["Franco"] << std::endl;}
+	\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Il modello ad oggetti di Qt}
+	Qt si basa sul \textbf{Qt object model}. E' questa architettura a rendere Qt potente e facile da usare. Il tutto si basa sulla classe {\ttfamily QObject} e sul tool {\ttfamily moc}.
+	
+	Facendo derivare tutte le classi dalla classe {\ttfamily QObject}, si ottengono una serie di vantaggi. Eccoli elencati qui:
+	
+	\begin{itemize}
+		\item Gestione semplificata della memoria
+		\item Segnali e slot
+		\item Proprietà
+		\item Conoscenza di se stessi
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Gestione semplificata della memoria}
+	Quando si crea un'istanza di una classe derivata da {\ttfamily QObject}, è possibile passare al costruttore un puntatore a un oggetto padre. Questa è la base della gestione semplificata della memoria.
+	
+	\bigskip
+	Quando un padre viene cancellato (ossia si esegue una {\ttfamily delete} su di esso), vengono cancellati anche tutti i suoi figli. Ciò significa che una classe derivata da {\ttfamily QObject} può creare istanze di figli di {\ttfamily QObject} passando {\ttfamily this} come padre senza preoccuparsi della loro distruzione.
+\end{frame}
+
+\begin{frame}{Gestione semplificata della memoria (esempio)}
+	\begin{columns}
+		\column{0.45\textwidth}
+		\begin{block}{}
+			\centering
+			\includegraphics[width=\textwidth]{images/es1main.pdf}
+		\end{block}
+		\column{0.45\textwidth}
+		\begin{block}{}
+			\centering
+			\includegraphics[width=\textwidth]{images/es1person.pdf}
+		\end{block}
+	\end{columns}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{block}{}\tiny
+			{\ttfamily \$ qmake \&\& make \&\& ./qobject-sample\\
+				Created:  "Franco"\\
+				Created:  "Andrea"\\
+				Created:  "Paolo"\\
+				Deleted:  "Franco"\\
+				Deleted:  "Andrea"\\
+				Deleted:  "Paolo"\\
+			}
+		\end{block}
+	\end{columns}
+	\bigskip
+	Come si può vedere, tutti gli oggetti vengono cancellati, prima i genitori e poi i figli.
+\end{frame}
+
+\begin{frame}{Segnali e slot}
+
+	
+\end{frame}
+\end{document}
