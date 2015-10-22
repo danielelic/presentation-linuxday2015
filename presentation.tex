@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[10pt]{beamer}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 
@@ -7,6 +7,16 @@
 \usepackage{url} 
 \usepackage{comment}
 \usepackage{booktabs}
+\usepackage{url}
+\usepackage{listings}
+\lstset{breakatwhitespace,
+	language=C++,
+	columns=fullflexible,
+	keepspaces,
+	breaklines,
+	tabsize=3, 
+	showstringspaces=false,
+	extendedchars=true}
 
 
 \usepackage{graphicx}
@@ -57,13 +67,13 @@
 			Dipartimento di Ingegneria dell'Informazione\\
 			
 			\vspace{1cm}
-			e-mail:\qquad \emph{danielelic@gmail.com}
+			e-mail:\qquad \emph{d.liciotti@univpm.it}
 			\column{0.3\textwidth}
 			\begin{figure}
 				\centering
 				\includegraphics[height=3cm]{images/me.png}
 			\end{figure}
-	\end{columns}
+		\end{columns}
 	\end{block}
 \end{frame}
 \begin{frame}
@@ -287,7 +297,7 @@
 
 \begin{frame}{Parti di QString}
 	\begin{columns}
-		\column{0.9\textwidth}
+		\column{0.94\textwidth}
 		\begin{block}{}
 			{\ttfamily //Ciao a tutti! Come va?\\
 				\bigskip
@@ -387,10 +397,19 @@
 \end{frame}
 
 \begin{frame}{I contenitori}
+	Un contenitore (container) è una collezione di oggetti di tipo omogeneo, organizzati in un certo modo.
+	
+	\bigskip
+	\begin{center}
+		\includegraphics[height=4cm]{images/container.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}{I contenitori}
 	Qt offre una nutrita serie di contenitori che permettono di soddisfare le esigenze più comuni.
 	\bigskip
 	\begin{columns}
-		\column{0.8\textwidth}
+		\column{0.85\textwidth}
 		\begin{block}{}
 			{\ttfamily QList<T>}: array di puntatori, accesso via indice rapido\\
 			{\ttfamily QLinkedList<T>}: lista concatenata, inserimenti rapidi\\
@@ -456,8 +475,7 @@ Hanno interfacce abbastanza simili
 	\begin{itemize}
 		\item Gestione semplificata della memoria
 		\item Segnali e slot
-		\item Proprietà
-		\item Conoscenza di se stessi
+		\item Introspezione
 	\end{itemize}
 \end{frame}
 
@@ -564,12 +582,6 @@ Hanno interfacce abbastanza simili
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Segnali e slot (esempio)}
-	\begin{figure}
-		\includegraphics[width=6cm]{images/gui-sample.png}
-	\end{figure}
-\end{frame}
-
 \begin{frame}{Segnali e slot}
 	\begin{block}{Connessioni automatiche}
 		A volte si hanno molti segnali e slot da collegare. Usando delle convenzioni si può ottenere un collegamento automatico. 
@@ -589,7 +601,98 @@ Hanno interfacce abbastanza simili
 	\end{block}
 \end{frame}
 
-\begin{frame}{Proprietà}
-	Gli oggetti Qt possono avere delle proprietà. Si tratta semplicemente di valori con associato un \textit{tipo} e almeno una funzione per la lettura dello stesso; e' anche possibile avere funzioni per impostare il valore. Queste proprietà vengono ad esempio utilizzate dal Designer per mostrare le proprieta' dei widget.
+\begin{frame}{L'introspezione}
+	\begin{block}{}
+		L'introspezione\footnote{altresì nota come reflection} è la capacità di un programma di eseguire elaborazioni che hanno per oggetto il programma stesso, e in particolare la struttura del suo codice sorgente.
+	\end{block}	
+	
+	\begin{itemize}
+		\item È un’alternativa all'introspezione di C++ (RTTI)
+		\item {\ttfamily QObject} offre informazioni sulla struttura di una classe:
+		\begin{itemize}
+			\item Nome della classe
+			\item Classe da cui eredita
+			\item Metodi e costruttori
+			\item Segnali, slot e proprietà
+		\end{itemize}
+		\item Si richiama tramite il metodo {\ttfamily QObject::metaObject()}\footnote{\url{http://doc.qt.io/qt-5/qobject.html\#metaObject}}
+	\end{itemize}
+\end{frame}
+
+\defverbatim[colored]\lst{%
+\begin{lstlisting}[tabsize=4,basicstyle=\ttfamily]
+TestClass istanza(NULL);
+const QMetaObject *instanza_info = instanza.metaObject();
+
+cout << instanza_info->className() << endl;
+for (int i = 0; i < istanza_info->methodCount(); i++)
+	cout << istanza_info->method(i).signature() << endl;
+\end{lstlisting}
+}
+
+\begin{frame}{L'introspezione (esempio)}
+	\begin{block}{}
+		\lst
+	\end{block}
+\end{frame}
+
+\begin{frame}{Threading in Qt}
+	\begin{block}{}
+		Un thread o thread di esecuzione, in informatica, è una suddivisione di un processo in due o più filoni o sottoprocessi, che vengono eseguiti concorrentemente da un sistema di elaborazione monoprocessore (multithreading) o multiprocessore o Multicore.
+	\end{block}
+	\bigskip
+	Qt offre vari metodi per l'esecuzione parallela di codice:
+	\begin{itemize}
+		\item {\ttfamily QThread}
+		\item {\ttfamily QSemaphore}
+		\item \dots
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{QThread}
+	Per creare un thread è sufficiente ereditare da {\ttfamily QThread}. Il suo metodo principale è {\ttfamily QThread::run()}.\\
+	\bigskip
+	
+	\begin{center}
+		\includegraphics[height=3cm]{images/multithread.jpg}
+	\end{center}
+	
+	Per lanciare un thread si usa {\ttfamily QThread::start()}, mentre  {\ttfamily QThread::wait()} permette di attendere la terminazione.
+\end{frame}
+
+\defverbatim[colored]\lst{%
+	\begin{lstlisting}[tabsize=4,basicstyle=\ttfamily]
+
+	\end{lstlisting}
+}
+
+\begin{frame}{QSemaphore}
+	È un semplice meccanismo di sincronizzazione a semaforo.\\
+	Alla creazione fissiamo il numero di thread concorrenti
+	\begin{columns}
+		\column{0.7\textwidth}
+		\begin{block}{}
+			{\ttfamily QSemaphore semaforo(1);\\
+				semaforo.acquire();\\
+				// Qui l'esecuzione sara' possibile\\
+				// solo un thread alla volta\\
+				semaforo.release();}
+		\end{block}
+	\end{columns}
+	
+\end{frame}
+
+
+\begin{frame}{Una prima applicazione grafica}
+	\begin{figure}
+		\includegraphics[width=6cm]{images/coding.jpg}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{\,}
+	\begin{center}
+		\includegraphics[height=5cm]{images/thats-all-folks.jpg}
+	\end{center}
 \end{frame}
 \end{document}
