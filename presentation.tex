@@ -22,8 +22,10 @@
 \date{Fermo, 24 Ottobre, 2015}
 \subject{LinuxDay2015}
 
-\usetheme{Madrid}
-\useoutertheme{infolines}
+\usetheme{Luebeck}
+\usecolortheme{crane}
+
+%\useoutertheme{infolines}
 
 \defbeamertemplate*{footline}{infolines}
 {
@@ -112,15 +114,15 @@
 	\end{block}
 	\vspace{0.5cm}
 	\begin{figure}
-		\includegraphics[height=1.6cm]{images/cplusplus.png}
+		\includegraphics[height=1.4cm]{images/cplusplus.png}
 		\qquad
-		\includegraphics[height=1.6cm]{images/python.png}
+		\includegraphics[height=1.4cm]{images/python.png}
 		\qquad
-		\includegraphics[height=1.6cm]{images/java.png}
+		\includegraphics[height=1.4cm]{images/java.png}
 		\qquad
-		\includegraphics[height=1.6cm]{images/php.png}
+		\includegraphics[height=1.4cm]{images/php.png}
 		\qquad
-		\includegraphics[height=1.6cm]{images/ruby.png}
+		\includegraphics[height=1.4cm]{images/ruby.png}
 	\end{figure}	
 \end{frame}
 
@@ -150,7 +152,7 @@
 	\frametitle{I moduli}
 	\begin{table}[]
 		\centering
-		\scriptsize
+		\tiny
 		\begin{tabular}{lp{8cm}}
 			\toprule
 			Module                        & Description                                                                                    \\
@@ -308,7 +310,7 @@
 	\begin{columns}
 		\column{0.7\textwidth}
 		\begin{block}{}
-			{\ttfamily //Salve a tutti voi! Come va?\\
+			{\ttfamily //Ciao a tutti voi! Come va?\\
 				\bigskip
 				stringa.\textcolor{red}{indexOf("a")}; //2\\
 				\bigskip
@@ -325,7 +327,7 @@
 	\begin{columns}
 		\column{0.7\textwidth}
 		\begin{block}{}
-			{\ttfamily //Salve a tutti voi! Come va?\\
+			{\ttfamily //Ciao a tutti voi! Come va?\\
 				\bigskip
 				stringa.\textcolor{red}{length()}; //22\\
 				\bigskip
@@ -342,7 +344,7 @@
 	\begin{columns}
 		\column{0.7\textwidth}
 		\begin{block}{}
-			{\ttfamily //Salve a tutti voi! Come va?\\
+			{\ttfamily //Ciao a tutti voi! Come va?\\
 				\bigskip
 				stringa.\textcolor{red}{length()}; //22\\
 				\bigskip
@@ -496,8 +498,98 @@ Hanno interfacce abbastanza simili
 	Come si può vedere, tutti gli oggetti vengono cancellati, prima i genitori e poi i figli.
 \end{frame}
 
-\begin{frame}{Segnali e slot}
-
+\begin{frame}{Compilazione ed esecuzione di un applicativo}
+	La sequenza di comandi (comunemente detti ``tool'') che vengono attivati per passare dal file {\ttfamily qobject-sample.pro} al file eseguibile {\ttfamily ./qobject-sample} è detta ``toolchain''.
 	
+	Quando facciamo il ``Build'' del programma vengono eseguiti i seguenti ``tool'' della libreria Qt:
+	\begin{enumerate}
+		\item {\ttfamily qmake}, converte il file progetto nel {\ttfamily MakeFile}
+		\item {\ttfamily make}, interpreta il {\ttfamily MakeFile}
+		\item {\ttfamily moc}, genera il codice di supporto per i Qt Meta Objects
+		\item {\ttfamily rcc}, converte il file delle risorse in file {\ttfamily C++}
+		\item {\ttfamily uic}, converte i file {\ttfamily .ui} in file {\ttfamily C++}
+	\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Segnali e slot}
+	\begin{columns}
+		\column{0.35\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{images/signal-slot.png}
+		\end{figure}
+		\column{0.60\textwidth}
+		\begin{block}{}
+			Segnali (\textit{sig}nals) e slot (\textit{slots}) permettono di legare insieme due oggetti senza che nessuno dei due sappia nulla dell'altro. 
+			
+			\bigskip
+			È possibile, ad esempio, costruire due classi {\ttfamily A} e {\ttfamily B} e fare in modo che ad un evento di {\ttfamily A} corrisponda un azione di {\ttfamily B} e viceversa senza doversi minimamente preoccupare di inserire in {\ttfamily A} riferimenti di {\ttfamily B}.
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Segnali e slot}
+	\begin{columns}
+		\column{0.35\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{images/signal-slot.png}
+		\end{figure}
+		\column{0.60\textwidth}
+		\begin{block}{}
+			Un \textit{segnale} è un avviso emesso da un oggetto al verificarsi di determinate condizioni. Ad ogni \textit{segnale} è collegato uno \textit{slot} ovvero una funzione {\ttfamily C/C++}.
+		\end{block}	
+		\bigskip	
+		\begin{block}{}
+			Per collegare un segnale ad uno slot si usa il comando:
+			\begin{center}
+				\footnotesize
+				{\ttfamily connect(sender, SIGNAL(signal), receiver, SLOT(slot));}
+			\end{center}
+		\end{block}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Segnali e slot}
+	\begin{block}{}
+		\begin{center}
+			{\ttfamily connect(sender, SIGNAL(signal), receiver, SLOT(slot));}
+		\end{center}
+	\end{block}
+	\bigskip
+	Possiamo avere varie forme di connessioni:
+	\begin{itemize}
+		\item \textbf{Più segnali collegati ad un solo slot}: la stessa funzione viene lanciata in corrispondenza di due o più segnali differenti.
+		\item \textbf{Un solo segnale collegato a più slot}: l'arrivo di un segnale genera l'esecuzione di più funzioni. Tali funzioni vengono eseguite una dopo l'altra in un ordine indefinito.
+		\item \textbf{Un segnale collegato a un segnale}: l'arrivo di un segnale causa semplicemente il lancio di un nuovo segnale.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Segnali e slot (esempio)}
+	\begin{figure}
+		\includegraphics[width=6cm]{images/gui-sample.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Segnali e slot}
+	\begin{block}{Connessioni automatiche}
+		A volte si hanno molti segnali e slot da collegare. Usando delle convenzioni si può ottenere un collegamento automatico. 
+		
+		Questo si realizza con {\ttfamily QMetaObject::connectSlotsByName}
+		\begin{itemize}
+			\item tutti gli oggetti figli (children) dell'oggetto
+			\item il nome e i segnali di ciascun figlio
+		\end{itemize}
+		
+		\bigskip
+		Associa i segnali dei figli allo slot corrispondente:
+		
+		\bigskip
+		\centering
+		{\ttfamily \textcolor{blue}{void} on\_<\textcolor{purple}{nome\_figlio}>\_<\textcolor{purple}{nome\_segnale}>(<parametri>)}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Proprietà}
+	Gli oggetti Qt possono avere delle proprietà. Si tratta semplicemente di valori con associato un \textit{tipo} e almeno una funzione per la lettura dello stesso; e' anche possibile avere funzioni per impostare il valore. Queste proprietà vengono ad esempio utilizzate dal Designer per mostrare le proprieta' dei widget.
 \end{frame}
 \end{document}
