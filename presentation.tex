@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt, aspectratio=169]{beamer}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 
@@ -67,7 +67,7 @@
 			Dipartimento di Ingegneria dell'Informazione\\
 			
 			\vspace{1cm}
-			e-mail:\qquad \emph{d.liciotti@univpm.it}
+			e-mail:\qquad \emph{danielelic@gmail.com}
 			\column{0.3\textwidth}
 			\begin{figure}
 				\centering
@@ -76,6 +76,19 @@
 		\end{columns}
 	\end{block}
 \end{frame}
+
+\begin{frame}{Un po di storia}
+	\begin{itemize}
+		\item 1991 si iniziò a scrivere le prime classi di Qt
+		\item 1995 venne rilasciata la versione 0.90 del toolkit
+		\item 2000 segna l'ingresso sul mercato dell'ambiente Qt/embedded
+		\item 2001 Qt 3.0
+		\item 2008 Nokia acquistò la piccola Trolltech
+		\item \dots
+		\item 2015 Qt 5.5
+	\end{itemize}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Perché Qt?}
 	\begin{itemize}
@@ -114,8 +127,8 @@
 	\begin{block}{}
 		Esistono binding per moltissimi altri linguaggi:
 		\begin{itemize}
+			\item Python
 			\item Java
-			\item C\#
 			\item Ruby
 			\item PHP
 			\item Perl
@@ -215,6 +228,15 @@
 	\end{figure}
 \end{frame}
 
+\begin{frame}{Qt Designer}
+	Quando si programma con Qt, si realizzano elementi grafici, quindi se per qualche motivo si desidera accellerare il processo di scrittura del codice è possibile utilizzare uno strumento visuale che permette di aggiungere gli elementi grafici con qualche clic.
+	
+	Tale strumento visuale è il \textbf{Qt Designer}.
+	
+	\bigskip
+	
+	Questo realizza un file con estenzione {\ttfamily UI}, che altro non è che un file XML che contiene la descrizione del form grafico realizzato.
+\end{frame}
 \begin{frame}
 	\frametitle{Una breve panoramica}
 	\begin{block}{}
@@ -270,8 +292,8 @@
 				//Salve a tutti!\\
 				stringa.\textcolor{red}{chop(2)};\\
 				\bigskip
-				//Salve a tutti! Come\\\
-				Stringa \textcolor{red}{+=} " Come";\\
+				//Salve a tutti! Come\\
+				stringa \textcolor{red}{+=} " Come";\\
 				\bigskip
 				//Salve a tutti! Come va?\\
 				stringa.\textcolor{red}{append(" va?")};}
@@ -378,8 +400,8 @@
 		\begin{block}{Il metodo QString::arg()}
 			{\ttfamily QString("Siamo \textcolor{red}{\%1} amici, e ci piacciono i \textcolor{red}{\%2}.")\\
 				.\textcolor{red}{arg(3)}\\
-				.\textcolor{red}{arg("gattini")};\\
-				//Siamo 3 amici e ci piacciono i gattini.}
+				.\textcolor{red}{arg("GATTINI")};\\
+				//Siamo 3 amici e ci piacciono i GATTINI.}
 		\end{block}
 	\end{columns}
 \end{frame}
@@ -686,7 +708,7 @@ for (int i = 0; i < istanza_info->methodCount(); i++)
 
 \begin{frame}{Una prima applicazione grafica}
 	\begin{figure}
-		\includegraphics[width=6cm]{images/coding.jpg}
+		\includegraphics[height=5cm]{images/coding.jpg}
 	\end{figure}
 \end{frame}
 
@@ -694,5 +716,9 @@ for (int i = 0; i < istanza_info->methodCount(); i++)
 	\begin{center}
 		\includegraphics[height=5cm]{images/thats-all-folks.jpg}
 	\end{center}
+	\begin{block}{}
+		Special thanks to POuL - Politecnico Open unix Labs
+	\end{block}
+	
 \end{frame}
 \end{document}
